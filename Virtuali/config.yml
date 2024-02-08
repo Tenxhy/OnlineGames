@@ -1,0 +1,7 @@
+nomi_squadre: ["Inter", "Milan", "Juventus", "Napoli", "Atalanta", "Fiorentina", "Roma",
+            "Bologna", "Brescia", "Lazio", "Torino", "Parma", "Genoa", "Lecce", 
+            "Sassuolo", "Udinese", "Spal", "Cagliari", "Verona", "Sampdoria"]
+
+vittorie: [1375, 1315, 1476, 867, 528, 1060, 1125, 822, 188, 905, 864, 327, 525, 117, 26, 478, 151, 359, 225, 661]
+
+partite_giocate: [2786, 2726, 2748, 2294, 1860, 2661, 2748, 2283, 736, 2448, 2357, 857, 1644, 538, 90, 1462, 544, 1229, 840, 1975]

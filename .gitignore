@@ -1,0 +1,20 @@
+# Logs and cache
+logs
+*.log
+*.local
+*.pyc
+
+# Editor directories and files
+!.vscode/*
+Virtuali/.vscode/settings.json
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local variables and settings
+.env
