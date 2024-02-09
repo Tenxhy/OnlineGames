@@ -2,7 +2,7 @@ from enum import Enum
 
 class Value(Enum):
     
-    ACE = 1
+    ACE = 11
     TWO = 2
     THREE = 3
     FOUR = 4
@@ -16,4 +16,4 @@ class Value(Enum):
     QUEEN = 10
     KING = 10
 
-Value = Enum('Value', ['ACE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'JACK', 'QUEEN', 'KING'])
+# Value = Enum('Value', ['ACE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'JACK', 'QUEEN', 'KING'])
