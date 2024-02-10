@@ -16,10 +16,10 @@ class BlackjackMain():
 #################################################################""".strip())
         print("#")
 
-        budget = float(input("# Benvenuto al nostro programma di blackjack. Inserisca l'importo della ricarica  "))
+        budget = float(input("# Benvenuto al nostro programma di blackjack. Inserisca l'importo della ricarica: "))
 
         while not(budget > 0 and budget < 10000):
-            budget = float(input("# Inserisca una cifra compresa tra 0 e 10000:  "))
+            budget = float(input("# Inserisca una cifra compresa tra 0 e 10000: "))
 
         while budget > 0:
             bet = float(input("# Inserisca la sua puntata: "))
@@ -27,21 +27,20 @@ class BlackjackMain():
             while bet < 0 or bet > budget:
                 bet = float(input("# Inserisca la sua puntata: "))
         
-            first_card = deck.drawCard()
-            second_card = deck.drawCard()
+            first_card, second_card = deck.drawCards(2)
             
             handvalue = first_card.getValue().value + second_card.getValue().value
 
-            print("# La sua mano e':", first_card.getFormattedName(), second_card.getFormattedName())
-            print("# Il valore della sua mano e':", handvalue)
+            print("# La sua mano è:", str(first_card), str(second_card))
+            print("# Il valore della sua mano è:", handvalue)
 
             first_dealer_card = deck.drawCard()
             second_dealer_card = deck.drawCard()
 
             dealer_handvalue = first_dealer_card.getValue().value
 
-            print("# La mano del banco e':", first_dealer_card.getFormattedName())
-            print("# Il valore della mano del banco e':", dealer_handvalue)
+            print("# La mano del banco è:", str(first_dealer_card))
+            print("# Il valore della mano del banco è:", dealer_handvalue)
 
             if handvalue == 21:
                 print("# Blackjack!")
@@ -56,15 +55,14 @@ class BlackjackMain():
 
                     case 2:
                         card = deck.drawCard()
-                        print("#", card.getFormattedName)
+                        print("#", str(card))
 
                         handvalue = handvalue + card.getValue().value
 
-                        print("# Il valore della sua mano e':", handvalue)
+                        print("# Il valore della sua mano è:", handvalue)
 
                     case 3:
-                        card1 = deck.drawCard()
-                        card2 = deck.drawCard()
+                        card1, card2 = deck.drawCards(2)
 
 
 

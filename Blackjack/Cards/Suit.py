@@ -6,5 +6,4 @@ class Suit(Enum):
     DIAMONDS = auto()
     CLUBS = auto()
     HEARTS = auto()
-
-Suit = Enum('Suit', ['SPADES', 'DIAMONDS', 'CLUBS', 'HEARTS'])
+    
