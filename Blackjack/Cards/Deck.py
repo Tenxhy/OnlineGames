@@ -144,9 +144,9 @@ class Deck():
             The drawn cards
         '''
         cards = []
-        for i in n_of_cards:
+        for i in range(n_of_cards):
             card = self.drawCard()
-            if not card is None:
+            if card is None:
                 return None
             cards.append(card)
         
