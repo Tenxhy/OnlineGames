@@ -2,6 +2,7 @@
 import random as rand
 from colorama import Fore, Back, Style
 import yaml
+import os
 from Simulazioni import Simulazioni
 from Utils import Suspance
 
@@ -9,7 +10,7 @@ class VirtualiMain():
     def __init__(self) -> None:
         self.suspance = Suspance()
 
-        with open('config.yml', 'r') as file:
+        with open(os.path.dirname(__file__) + r'\configs\config.yml', 'r') as file:
             config = yaml.safe_load(file)
 
         self.nomiSquadre = config["nomi_squadre"]
