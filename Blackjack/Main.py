@@ -1,4 +1,4 @@
-from BlackJack import Blackjack
+from Blackjack import Blackjack
 
 if __name__ == "__main__":
     game = Blackjack()

@@ -4,7 +4,7 @@ import yaml
 from Cards import Deck
 from Cards import Value
 
-deck = Deck(2)
+deck = Deck(4)
 
 class Blackjack():
 
@@ -28,7 +28,8 @@ class Blackjack():
                 bet = float(input("# Inserisca la sua puntata: "))
             
             drawn_cards = deck.drawCards(2)
-            if drawn_cards:
+
+            if not drawn_cards is None:
                 first_card, second_card = drawn_cards
             else:
                 print("# Mazzo esaurito")
@@ -72,7 +73,6 @@ class Blackjack():
 
 
             else:
-                choice = int(input("# Scelga cosa vuole fare:\n# 1. Stare\n# 2. Chiamare carta\n# 3. Raddoppiare\n\t"))
-
+                choice = int(input("# Scelga cosa vuole fare:\n# 1. Stare\n# 2. Chiamare carta\n# 3. Raddoppiare\n# "))
 
         print("#")

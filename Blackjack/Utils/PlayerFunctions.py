@@ -1,0 +1,3 @@
+@staticmethod
+class PlayerFunctions:
+    pass
