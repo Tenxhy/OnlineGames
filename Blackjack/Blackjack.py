@@ -1,8 +1,12 @@
+import yaml
 import random as rand
 from colorama import Fore, Back, Style
-import yaml
 from Cards import Deck
 from Cards import Value
+from Utils import DealerFunctions
+from Utils import PlayerFunctions
+from Utils import GameFunctions
+from Cards import Hand
 
 deck = Deck(4)
 
@@ -12,67 +16,113 @@ class Blackjack():
 
         print("""
 #################################################################
-#\t\t   BLACKJACK MATINO MENICHETTI      \t\t#
+#\t\t            BLACKJACK           \t\t#
 #################################################################""".strip())
         print("#")
 
-        budget = float(input("# Benvenuto al nostro programma di blackjack. Inserisca l'importo della ricarica: "))
+        balance = float(input("# Enter your balance: "))
 
-        while not(budget > 0 and budget < 10000):
-            budget = float(input("# Inserisca una cifra compresa tra 0 e 10000: "))
+        while balance > 0:
+            bet = GameFunctions().placeBet()
+            dealerHand, playerHand = GameFunctions().getDealedCards(deck)
+            playerHand.setCards([playerHand.getCards()[0], playerHand.getCards()[0]]) # DEBUG
 
-        while budget > 0:
-            bet = float(input("# Inserisca la sua puntata: "))
+            GameFunctions().printInitialHands(dealerHand.getCards(), playerHand.getCards())
 
-            while bet < 0 or bet > budget:
-                bet = float(input("# Inserisca la sua puntata: "))
-            
-            drawn_cards = deck.drawCards(2)
+            if GameFunctions().isBlackjack(playerHand):
+                print("Blackjack! You win!")
+                balance += bet*1.5
 
-            if not drawn_cards is None:
-                first_card, second_card = drawn_cards
             else:
-                print("# Mazzo esaurito")
+                while not GameFunctions().isBust(playerHand):
+                    choice = input("What do you want to do? 'hit' | 'stand' | 'double' | 'split'  ")
+
+                    if choice == "hit":
+                        playerHand = PlayerFunctions().hit(deck, playerHand)
+                        GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+
+                    elif choice == "double":
+                        if balance < bet*2:
+                            print("You don't have enough money to double down.")
+                        else:
+                            bet *= 2
+                            playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                            break
+
+                    elif choice == "split":
+                        if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue():
+                            print("You can only split if you have two cards of the same value.")
+                        else:
+                            playerHand = PlayerFunctions().split(deck, playerHand)
+                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                            break
+                    else:
+                        break
+                
+                if not playerHand.isSplit():
+                    if GameFunctions().isBust(playerHand):
+                        print("Bust! Dealer wins!")
+                        balance -= bet
+
+                    else:
+                        while GameFunctions().getHandValue(dealerHand) < 17:
+                            dealerHand = DealerFunctions().hit(deck, dealerHand)
+                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+
+                        if GameFunctions().isBust(dealerHand):
+                            print("Dealer busts! You win!")
+                            balance += bet
+
+                        else:
+                            print(GameFunctions().checkWinner(dealerHand, playerHand))
+
+                            if GameFunctions().checkWinner(dealerHand, playerHand) == "Player wins":
+                                balance += bet
+
+                            elif GameFunctions().checkWinner(dealerHand, playerHand) == "Dealer wins":
+                                balance -= bet
+
+                            else:
+                                pass
+                else:
+                    for hand in playerHand.getCards():
+                        hand = Hand(hand)
+                        if GameFunctions().isBust(hand):
+                            print("Bust! Dealer wins!")
+                            balance -= bet
+                            hand.getCards().remove(hand)
+                        
+                        else:
+                            while GameFunctions().getHandValue(dealerHand) < 17:
+                                dealerHand = DealerFunctions().hit(deck, dealerHand)
+                                GameFunctions().printHands(dealerHand.getCards(), hand.getCards()) # FIXME: stop printing it twice
+
+                            if GameFunctions().isBust(dealerHand):
+                                print("Dealer busts! You win!")
+                                balance += bet
+
+                            else:
+                                print(GameFunctions().checkWinner(dealerHand, hand))
+
+                                if GameFunctions().checkWinner(dealerHand, hand) == "Player wins":
+                                    balance += bet
+
+                                elif GameFunctions().checkWinner(dealerHand, hand) == "Dealer wins":
+                                    balance -= bet
+
+                                else:
+                                    pass
+
+            print(f"Your balance: {balance}")
+
+            if balance > 0:
+                playAgain = input("Do you want to play again? ")
+                if playAgain == "no":
+                    break
+
+            else:
+                print("You have no more money to play.")
                 break
-            
-            handvalue = first_card.getValue().value + second_card.getValue().value
 
-            print("# La sua mano è:", str(first_card), str(second_card))
-            print("# Il valore della sua mano è:", handvalue)
-
-            first_dealer_card = deck.drawCard()
-            second_dealer_card = deck.drawCard()
-
-            dealer_handvalue = first_dealer_card.getValue().value
-
-            print("# La mano del banco è:", str(first_dealer_card))
-            print("# Il valore della mano del banco è:", dealer_handvalue)
-
-            if handvalue == 21:
-                print("# Blackjack!")
-
-            elif first_card.getValue() == second_card.getValue():
-                choice = int(input("# Scelga cosa vuole fare:\n# 1. Stare\n# 2. Chiamare carta\n# 3. Dividere \n# 4. Raddoppiare"))
-
-                match choice:
-
-                    case 1: 
-                        pass
-
-                    case 2:
-                        card = deck.drawCard()
-                        print("#", str(card))
-
-                        handvalue = handvalue + card.getValue().value
-
-                        print("# Il valore della sua mano è:", handvalue)
-
-                    case 3:
-                        card1, card2 = deck.drawCards(2)
-
-
-
-            else:
-                choice = int(input("# Scelga cosa vuole fare:\n# 1. Stare\n# 2. Chiamare carta\n# 3. Raddoppiare\n# "))
-
-        print("#")
+        print("Thanks for playing!")

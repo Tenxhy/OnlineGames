@@ -2,8 +2,8 @@ from .Card import Card
 from typing import List
 
 class Hand:
-    def __init__(self, cards: List[Card]) -> None:
-        self._cards = []
+    def __init__(self, cards: List[Card] = []) -> None:
+        self._cards = cards
         self._split = False
 
     def isSplit(self) -> bool:

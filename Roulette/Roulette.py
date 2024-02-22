@@ -58,7 +58,7 @@ class Roulette:
         print("# Ha scelto l'opzione numero pari!")
         print("#")
         imp = self._get_bet()
-        ris, _ = estraction.estrai()
+        ris, _ = self._estrai()
 
         if ris % 2 == 0:
             self._esito(True, imp*2)
