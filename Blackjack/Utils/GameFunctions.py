@@ -6,6 +6,7 @@ from Utils import DealerFunctions
 from Utils import PlayerFunctions
 from Cards import Hand
 
+import time
 from typing import List
 
 @staticmethod
@@ -36,16 +37,37 @@ class GameFunctions:
                     value += 11
             else:
                 value += card.getValue().value
+            
+            if value > 21:
+                for card in hand:
+                    if card.getValue() == Value.ACE:
+                        value -= 10
+                        if value <= 21:
+                            break
         return value
     
     @staticmethod
     def printInitialHands(dealerHand: List[Card], playerHand: List[Card]):
-        print("Dealer's hand: ", end="")
-        print(str(dealerHand[0]), end=" ")
-        print("")
-        print("Your hand: ", end="")
-        print(str(playerHand[0]), end=" | ")
-        print(str(playerHand[1]))
+
+        if type(playerHand[0]) != type([]):
+            print("Dealer's hand: ", end="")
+            print(str(dealerHand[0]), end=" ")
+            print("")
+            print("Your hand: ", end="")
+            print(str(playerHand[0]), end=" | ")
+            print(str(playerHand[1]))
+        else:
+            print("Dealer's hand: ", end="")
+            print(str(dealerHand[0]), end=" ")
+            print("")
+            for i in range(len(playerHand)):
+                hand = playerHand[i]
+                print(f"Your {i+1}° hand: ", end="")
+                for card in hand:
+                    print(str(card), end=" | ")
+                print("")
+
+        
 
     @staticmethod
     def printHands(dealerHand: List[Card], playerHand: List[Card]):
@@ -53,10 +75,17 @@ class GameFunctions:
         for card in dealerHand:
             print(str(card), end=" | ")
         print("")
+        print("Your hand: ", end="")
+        for card in playerHand:
+            print(str(card), end=" | ")
+        print("")
 
-        if type(playerHand[0]) != type([]):
-            print("Your hand: ", end="")
-            for card in playerHand:
+    @staticmethod
+    def printSplitHands(playerHand: List[Card], n_of_hand: int = None):
+        if n_of_hand != None:
+            hand = playerHand[n_of_hand-1]
+            print(f"Your {n_of_hand}° hand: ", end="")
+            for card in hand:
                 print(str(card), end=" | ")
             print("")
         else:
@@ -66,6 +95,7 @@ class GameFunctions:
                 for card in hand:
                     print(str(card), end=" | ")
                 print("")
+                time.sleep(2)
     
     @staticmethod
     def isBlackjack(hand: Hand) -> bool:
@@ -74,8 +104,7 @@ class GameFunctions:
     
     @staticmethod
     def isBust(hand: Hand) -> bool:
-        hand = hand.getCards()
-        return GameFunctions().getHandValue(hand) > 21
+        return GameFunctions().getHandValue(hand.getCards()) > 21
     
     @staticmethod
     def checkWinner(dealerHand: Hand, playerHand: Hand) -> str:

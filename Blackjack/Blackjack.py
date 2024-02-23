@@ -35,7 +35,7 @@ class Blackjack():
 
             else:
                 while not GameFunctions().isBust(playerHand):
-                    choice = input("What do you want to do? 'hit' | 'stand' | 'double' | 'split'  ")
+                    choice = input("What do you want to do with your first hand? 'hit' | 'stand' | 'double' | 'split'  ")
 
                     if choice == "hit":
                         playerHand = PlayerFunctions().hit(deck, playerHand)
@@ -51,13 +51,62 @@ class Blackjack():
                             break
 
                     elif choice == "split":
-                        if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue():
-                            print("You can only split if you have two cards of the same value.")
+                        if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue() or balance < bet*2:
+                            print("You can only split if you have two cards of the same value and if you have enough money.")
                         else:
                             playerHand = PlayerFunctions().split(deck, playerHand)
-                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
-                            break
+                            GameFunctions().printInitialHands(dealerHand.getCards(), playerHand.getCards())
+
+                            while not GameFunctions().isBust(Hand(playerHand.getCards()[0])):
+                                choice1 = input("What do you want to do? 'hit' | 'stand' | 'double' ")
+
+                                if choice1 == "hit":
+                                    playerHand = PlayerFunctions().hit(deck, playerHand, 1)
+                                    GameFunctions().printSplitHands(playerHand.getCards(), 1)
+                                elif choice1 == "double":
+                                    if balance < bet*2:
+                                        print("You don't have enough money to double down.")
+                                    else:
+                                        bet *= 2
+                                        playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                        GameFunctions().printSplitHands(playerHand.getCards(), 1)
+                                        break
+                                else:
+                                    break
+
+                            if GameFunctions().isBust(Hand(playerHand.getCards()[0])):
+                                print("Bust! Dealer wins!")
+                                balance -= bet
+
+                            toBreak = True
+                            
+                            while not GameFunctions().isBust(Hand(playerHand.getCards()[1])):
+                                choice2 = input("What do you want to do with your second hand? 'hit' | 'stand' | 'double' ")
+
+                                if choice2 == "hit":
+                                    playerHand = PlayerFunctions().hit(deck, playerHand, 2)
+                                    GameFunctions().printSplitHands(playerHand.getCards(), 2)
+                                
+                                elif choice2 == "double":
+                                    if balance < bet*2:
+                                        print("You don't have enough money to double down.")
+                                    else:
+                                        bet *= 2
+                                        playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                        GameFunctions().printSplitHands(playerHand.getCards(), 2)
+                                        break
+                                else:
+                                    break
+
+                            if GameFunctions().isBust(Hand(playerHand.getCards()[1])):
+                                print("Bust! Dealer wins!")
+                                balance -= bet
+                            
+                            toBreak = True
                     else:
+                        break
+
+                    if toBreak:
                         break
                 
                 if not playerHand.isSplit():

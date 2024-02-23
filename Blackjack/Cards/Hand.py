@@ -3,7 +3,10 @@ from typing import List
 
 class Hand:
     def __init__(self, cards: List[Card] = []) -> None:
-        self._cards = cards
+        if type(cards) == type([]):
+            self._cards = cards
+        else:
+            self._cards = [cards]
         self._split = False
 
     def isSplit(self) -> bool:
