@@ -150,10 +150,11 @@ class VirtualiMain():
         risultatiFinali = []
         contatore = 0
         risultatiGiocatiDict = dict(risultatiGiocati)
+        reordered_dict = {k: risultatiGiocatiDict[k] for k in range(11) if k in risultatiGiocatiDict}
         check = True
         for partite in range(10):
 
-            if partite+1 in risultatiGiocatiDict.keys():
+            if partite+1 in reordered_dict.keys():
 
                 golCasa, golTrasferta = Simulazioni.simulazione(risultatiGiocati, squadreOrdinate, moltiplicatori, contatore)
 
@@ -169,7 +170,7 @@ class VirtualiMain():
 
                 print("#")
 
-                if risultatiFinali[contatore-1] == risultatiGiocati[contatore-1][1]:
+                if risultatiFinali[contatore-1] == reordered_dict[partite+1]:
                     print(Fore.LIGHTYELLOW_EX + "# Il risultato di",squadreOrdinate[partite], " è " + Style.RESET_ALL, Back.GREEN, golCasa, "-", str(golTrasferta), Style.RESET_ALL)
 
                 else:
@@ -177,12 +178,12 @@ class VirtualiMain():
                     check = False
                 
         if check:
-            print("# Lei ha vinto la schedina! Il checkout è di " + Fore.GREEN, str(vincitaPotenziale) + " euro")
+            print("# Lei ha appena ballato la fresca! Il checkout è di " + Fore.GREEN, str(vincitaPotenziale) + " euro", Style.RESET_ALL)
 
             budget = budget + float(vincitaPotenziale)
 
         else:
-            print("# Lei ha perso la schedina! La perdita è di "+ Fore.RED, str(importo) + " euro", Style.RESET_ALL)
+            print("# Lei è appena uscito stirato! La perdita è di "+ Fore.RED, str(importo) + " euro", Style.RESET_ALL)
 
         scelta = int(input(f"# Il suo budget attuale è di {budget} euro. Per continuare a giocare prema 1, per smettere prema qualsiasi altro tasto: "))
             
