@@ -179,10 +179,12 @@ class VirtualiMain():
         if check:
             print("# Lei ha vinto la schedina! Il checkout è di " + Fore.GREEN, str(vincitaPotenziale) + " euro")
 
-            budget = budget + vincitaPotenziale
+            budget = budget + float(vincitaPotenziale)
 
         else:
             print("# Lei ha perso la schedina! La perdita è di "+ Fore.RED, str(importo) + " euro", Style.RESET_ALL)
 
         scelta = int(input(f"# Il suo budget attuale è di {budget} euro. Per continuare a giocare prema 1, per smettere prema qualsiasi altro tasto: "))
             
+        if scelta == 1:
+            self.start()
