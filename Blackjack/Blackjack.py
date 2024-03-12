@@ -27,88 +27,136 @@ class Blackjack():
             dealerHand, playerHand = GameFunctions().getDealedCards(deck)
             playerHand.setCards([playerHand.getCards()[0], playerHand.getCards()[0]]) # DEBUG
 
-            GameFunctions().printInitialHands(dealerHand.getCards(), playerHand.getCards())
-
+            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+            
             if GameFunctions().isBlackjack(playerHand):
                 print("Blackjack! You win!")
                 balance += bet*1.5
 
+            # TODO: If the dealer has an ace, the player can take insurance
+                
             else:
+                toBreak = False
                 while not GameFunctions().isBust(playerHand):
-                    choice = input("What do you want to do with your first hand? 'hit' | 'stand' | 'double' | 'split'  ")
+                    print("")
 
-                    if choice == "hit":
-                        playerHand = PlayerFunctions().hit(deck, playerHand)
-                        GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                    if GameFunctions().getHandValue(playerHand) == 21:
+                        break
 
-                    elif choice == "double":
-                        if balance < bet*2:
-                            print("You don't have enough money to double down.")
-                        else:
-                            bet *= 2
-                            playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                    if len(playerHand.getCards()) == 2:
+                        choice = input("What do you want to do? 'hit' | 'stand' | 'double' | 'split' ")
+                    else:
+                        choice = input("What do you want to do? 'hit' | 'stand' | 'split' ")
+                    
+                    match choice:
+
+                        case "hit":
+                            playerHand = PlayerFunctions().hit(deck, playerHand)
                             GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+
+                        case "double":
+                            if balance < bet*2:
+                                print("You don't have enough money to double down.")
+                            else:
+                                bet *= 2
+                                playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                                break
+
+                        case "split":
+                            if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue() or balance < bet*2:
+                                print("You can only split if you have two cards of the same value and if you have enough money.")
+                            else:
+                                playerHand = PlayerFunctions().split(deck, playerHand)
+                                GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+
+                                while not GameFunctions().isBust(Hand(playerHand.getCards()[0])):
+                                    print("")
+                                    if GameFunctions().getHandValue(Hand(playerHand.getCards()[0])) == 21:
+                                        break
+
+                                    if len(playerHand.getCards()[1]) == 2:
+                                        choice1 = input("What do you want to do with your first hand? 'hit' | 'stand' | 'double' ")
+                                    else:
+                                        choice1 = input("What do you want to do with your first hand? 'hit' | 'stand' ")
+
+                                    match choice1:
+
+                                        case "hit":
+                                            playerHand = PlayerFunctions().hit(deck, playerHand, 1)
+                                            GameFunctions().printSplitHands(playerHand.getCards(), 1)
+                                        case "double":
+                                            if balance < bet*2:
+                                                print("You don't have enough money to double down.")
+                                            else:
+                                                bet *= 2
+                                                playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                                GameFunctions().printSplitHands(playerHand.getCards(), 1)
+                                                break
+                                        case "stand":
+                                            break
+
+                                        case _:
+                                            print("Invalid choice. Try again.")
+
+                                if GameFunctions().isBust(Hand(playerHand.getCards()[0])):
+                                    print("Bust! Dealer wins!")
+                                    balance -= bet
+
+                                toBreak = True
+                                
+                                while not GameFunctions().isBust(Hand(playerHand.getCards()[1])):
+                                    print("")
+                                    if GameFunctions().getHandValue(Hand(playerHand.getCards()[0])) == 21:
+                                        break
+                                    
+                                    if len(playerHand.getCards()[1]) == 2:
+                                        choice2 = input("What do you want to do with your second hand? 'hit' | 'stand' | 'double' ")
+                                    else:
+                                        choice2 = input("What do you want to do with your second hand? 'hit' | 'stand' ")
+
+                                    match choice2:
+                                        
+                                        case "hit":
+                                            playerHand = PlayerFunctions().hit(deck, playerHand, 2)
+                                            GameFunctions().printSplitHands(playerHand.getCards(), 2)
+                                        
+                                        case "double":
+                                            if len(playerHand.getCards()[1]) == 2:
+                                                print("Invalid choice. Try again.")
+
+                                            else:
+                                                if balance < bet*2:
+                                                    print("You don't have enough money to double down.")
+                                                else:
+                                                    bet *= 2
+                                                    playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                                    GameFunctions().printSplitHands(playerHand.getCards(), 2)
+                                                    break
+                                        case "stand":
+                                            break
+
+                                        case _:
+                                            print("Invalid choice. Try again.")
+
+                                if GameFunctions().isBust(Hand(playerHand.getCards()[1])):
+                                    print("Bust! Dealer wins!")
+                                    balance -= bet
+                                
+                                toBreak = True
+                        case "stand":
+
                             break
 
-                    elif choice == "split":
-                        if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue() or balance < bet*2:
-                            print("You can only split if you have two cards of the same value and if you have enough money.")
-                        else:
-                            playerHand = PlayerFunctions().split(deck, playerHand)
-                            GameFunctions().printInitialHands(dealerHand.getCards(), playerHand.getCards())
-
-                            while not GameFunctions().isBust(Hand(playerHand.getCards()[0])):
-                                choice1 = input("What do you want to do? 'hit' | 'stand' | 'double' ")
-
-                                if choice1 == "hit":
-                                    playerHand = PlayerFunctions().hit(deck, playerHand, 1)
-                                    GameFunctions().printSplitHands(playerHand.getCards(), 1)
-                                elif choice1 == "double":
-                                    if balance < bet*2:
-                                        print("You don't have enough money to double down.")
-                                    else:
-                                        bet *= 2
-                                        playerHand = PlayerFunctions().doubleDown(deck, playerHand)
-                                        GameFunctions().printSplitHands(playerHand.getCards(), 1)
-                                        break
-                                else:
-                                    break
-
-                            if GameFunctions().isBust(Hand(playerHand.getCards()[0])):
-                                print("Bust! Dealer wins!")
-                                balance -= bet
-
-                            toBreak = True
-                            
-                            while not GameFunctions().isBust(Hand(playerHand.getCards()[1])):
-                                choice2 = input("What do you want to do with your second hand? 'hit' | 'stand' | 'double' ")
-
-                                if choice2 == "hit":
-                                    playerHand = PlayerFunctions().hit(deck, playerHand, 2)
-                                    GameFunctions().printSplitHands(playerHand.getCards(), 2)
-                                
-                                elif choice2 == "double":
-                                    if balance < bet*2:
-                                        print("You don't have enough money to double down.")
-                                    else:
-                                        bet *= 2
-                                        playerHand = PlayerFunctions().doubleDown(deck, playerHand)
-                                        GameFunctions().printSplitHands(playerHand.getCards(), 2)
-                                        break
-                                else:
-                                    break
-
-                            if GameFunctions().isBust(Hand(playerHand.getCards()[1])):
-                                print("Bust! Dealer wins!")
-                                balance -= bet
-                            
-                            toBreak = True
-                    else:
-                        break
+                        case _:
+                            print("Invalid choice. Try again.")
 
                     if toBreak:
                         break
-                
+
+                DealerFunctions().revealHiddenCards(dealerHand)
+                DealerFunctions().printDealerHand(dealerHand.getCards())
+
                 if not playerHand.isSplit():
                     if GameFunctions().isBust(playerHand):
                         print("Bust! Dealer wins!")
@@ -117,61 +165,46 @@ class Blackjack():
                     else:
                         while GameFunctions().getHandValue(dealerHand) < 17:
                             dealerHand = DealerFunctions().hit(deck, dealerHand)
-                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                            DealerFunctions().printDealerHand(dealerHand.getCards())
 
                         if GameFunctions().isBust(dealerHand):
                             print("Dealer busts! You win!")
                             balance += bet
 
                         else:
-                            print(GameFunctions().checkWinner(dealerHand, playerHand))
-
-                            if GameFunctions().checkWinner(dealerHand, playerHand) == "Player wins":
-                                balance += bet
-
-                            elif GameFunctions().checkWinner(dealerHand, playerHand) == "Dealer wins":
-                                balance -= bet
-
-                            else:
-                                pass
+                            result, balance = GameFunctions().checkWinner(dealerHand, playerHand, balance, bet)
+                            print(result)
                 else:
                     for hand in playerHand.getCards():
                         hand = Hand(hand)
                         if GameFunctions().isBust(hand):
                             print("Bust! Dealer wins!")
                             balance -= bet
-                            hand.getCards().remove(hand)
                         
                         else:
                             while GameFunctions().getHandValue(dealerHand) < 17:
                                 dealerHand = DealerFunctions().hit(deck, dealerHand)
-                                GameFunctions().printHands(dealerHand.getCards(), hand.getCards()) # FIXME: stop printing it twice
+                                DealerFunctions().printDealerHand(dealerHand.getCards())
 
                             if GameFunctions().isBust(dealerHand):
                                 print("Dealer busts! You win!")
                                 balance += bet
 
                             else:
-                                print(GameFunctions().checkWinner(dealerHand, hand))
-
-                                if GameFunctions().checkWinner(dealerHand, hand) == "Player wins":
-                                    balance += bet
-
-                                elif GameFunctions().checkWinner(dealerHand, hand) == "Dealer wins":
-                                    balance -= bet
-
-                                else:
-                                    pass
+                                result, balance = GameFunctions().checkWinner(dealerHand, playerHand, balance, bet)
+                                for e in result:
+                                    print(e)
 
             print(f"Your balance: {balance}")
 
             if balance > 0:
+                print("")
                 playAgain = input("Do you want to play again? ")
                 if playAgain == "no":
                     break
 
             else:
-                print("You have no more money to play.")
+                print("\nYou have no more money to play.")
                 break
 
         print("Thanks for playing!")

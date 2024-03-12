@@ -7,7 +7,8 @@ from Utils import PlayerFunctions
 from Cards import Hand
 
 import time
-from typing import List
+from typing import List, Union
+from deprecated import deprecated
 
 @staticmethod
 class GameFunctions:
@@ -45,40 +46,24 @@ class GameFunctions:
                         if value <= 21:
                             break
         return value
-    
+
     @staticmethod
-    def printInitialHands(dealerHand: List[Card], playerHand: List[Card]):
+    def printHands(dealerHand: List[Card], playerHand: List[Card]):
 
         if type(playerHand[0]) != type([]):
-            print("Dealer's hand: ", end="")
-            print(str(dealerHand[0]), end=" ")
-            print("")
+            DealerFunctions().printDealerHand(dealerHand)
             print("Your hand: ", end="")
-            print(str(playerHand[0]), end=" | ")
-            print(str(playerHand[1]))
-        else:
-            print("Dealer's hand: ", end="")
-            print(str(dealerHand[0]), end=" ")
+            for card in playerHand:
+                print(str(card), end=" | ")
             print("")
+        else:
+            DealerFunctions().printDealerHand(dealerHand)
             for i in range(len(playerHand)):
                 hand = playerHand[i]
                 print(f"Your {i+1}° hand: ", end="")
                 for card in hand:
                     print(str(card), end=" | ")
                 print("")
-
-        
-
-    @staticmethod
-    def printHands(dealerHand: List[Card], playerHand: List[Card]):
-        print("Dealer's hand: ", end="")
-        for card in dealerHand:
-            print(str(card), end=" | ")
-        print("")
-        print("Your hand: ", end="")
-        for card in playerHand:
-            print(str(card), end=" | ")
-        print("")
 
     @staticmethod
     def printSplitHands(playerHand: List[Card], n_of_hand: int = None):
@@ -107,36 +92,40 @@ class GameFunctions:
         return GameFunctions().getHandValue(hand.getCards()) > 21
     
     @staticmethod
-    def checkWinner(dealerHand: Hand, playerHand: Hand) -> str:
-        if playerHand.isSplit():
+    def checkWinner(dealerHand: Hand, playerHand: Hand, balance: float, bet: float) -> Union[str, float] | Union[List[str], float]:
+        result = ""
+        if not playerHand.isSplit():
             if GameFunctions().isBust(dealerHand):
-                return "Player wins"
+                result = "Player wins"
             elif GameFunctions().isBust(playerHand):
-                return "Dealer wins"
+                result = "Dealer wins"
             elif GameFunctions().getHandValue(dealerHand.getCards()) > GameFunctions().getHandValue(playerHand.getCards()):
-                return "Dealer wins"
+                result = "Dealer wins"
             elif GameFunctions().getHandValue(dealerHand.getCards()) < GameFunctions().getHandValue(playerHand.getCards()):
-                return "Player wins"
+                result = "Player wins"
             else:
-                return "Push"
+                result = "Push"
         else:
             for i in range(len(playerHand.getCards())):
                 hand = Hand(playerHand.getCards()[i])
                 if GameFunctions().isBust(dealerHand):
-                    return "Player wins round " + str(i+1)
+                    result.append("Player wins round " + str(i+1))
                 elif GameFunctions().isBust(hand):
-                    return "Dealer wins " + str(i+1)
+                    result.append("Dealer wins " + str(i+1))
                 elif GameFunctions().getHandValue(dealerHand.getCards()) > GameFunctions().getHandValue(hand.getCards()):
-                    return "Dealer wins " + str(i+1)
+                    result.append("Dealer wins " + str(i+1))
                 elif GameFunctions().getHandValue(dealerHand.getCards()) < GameFunctions().getHandValue(hand.getCards()):
-                    return "Player wins " + str(i+1)
+                    result.append("Player wins " + str(i+1))
                 else:
-                    return "Push"
+                    result.append("Push")
+                
+        balance = GameFunctions().balanceRefresh(balance, bet, result)
+        return result, balance
     
     @staticmethod
     def balanceRefresh(balance: float, bet: float, result: str) -> float:
-        if result == "Player wins":
+        if result.startswith("Player wins"):
             balance += bet
-        elif result == "Dealer wins":
+        elif result.startswith("Dealer wins"):
             balance -= bet
         return balance
