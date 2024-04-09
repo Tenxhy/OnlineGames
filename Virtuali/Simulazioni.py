@@ -44,6 +44,9 @@ class Simulazioni:
             if nrand in prob:
                 golTrasferta = golTrasferta+1
 
+            if golCasa+golTrasferta == 6:
+                break
+
         return golCasa, golTrasferta
 
         
