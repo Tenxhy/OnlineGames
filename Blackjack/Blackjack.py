@@ -25,7 +25,7 @@ class Blackjack():
         while balance > 0:
             bet = GameFunctions().placeBet()
             dealerHand, playerHand = GameFunctions().getDealedCards(deck)
-            playerHand.setCards([playerHand.getCards()[0], playerHand.getCards()[0]]) # DEBUG
+            
 
             GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
             
@@ -55,13 +55,24 @@ class Blackjack():
                             GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
 
                         case "double":
-                            if balance < bet*2:
-                                print("You don't have enough money to double down.")
+                            if type(playerHand[0]) != type([]):
+                                
+                                if balance < (bet*2)+bet:
+                                    print("You don't have enough money to double down.")
+                                else:
+                                    bet *= 2
+                                    playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                    GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                                    break
+                                
                             else:
-                                bet *= 2
-                                playerHand = PlayerFunctions().doubleDown(deck, playerHand)
-                                GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
-                                break
+                                if balance < (bet*2)+bet:
+                                    print("You don't have enough money to double down.")
+                                else:
+                                    bet *= 2
+                                    playerHand = PlayerFunctions().doubleDown(deck, playerHand)
+                                    GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                                    break
 
                         case "split":
                             if playerHand.getCards()[0].getValue() != playerHand.getCards()[1].getValue() or balance < bet*2:

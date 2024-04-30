@@ -106,6 +106,7 @@ class GameFunctions:
             else:
                 result = "Push"
         else:
+            result = []
             for i in range(len(playerHand.getCards())):
                 hand = Hand(playerHand.getCards()[i])
                 if GameFunctions().isBust(dealerHand):

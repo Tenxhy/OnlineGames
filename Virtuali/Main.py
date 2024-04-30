@@ -95,6 +95,8 @@ class VirtualiMain():
         quota = 1
         partiteNonValide = []
 
+        os.system('cls' if os.name == 'nt' else 'clear')
+
         for c in range(npartite):
 
             partiteSchedina = int(input("# Inserisca il numero della partita che vuoi giocare:  "))
