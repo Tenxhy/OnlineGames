@@ -1,0 +1,21 @@
+cards:
+  display:
+    - "\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510"
+    - "| XX      |"
+    - "|         |"
+    - "|    Y    |"
+    - "|         |"
+    - "|      XX |"
+    - "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+
+  symbols:
+    spades: "\u2660"
+    clubs: "\u2663"
+    hearts: "\u2665"
+    diamonds: "\u2666"
+
+  ranks:
+    ace: "A"
+    jack: "J"
+    queen: "Q"
+    king: "K"
