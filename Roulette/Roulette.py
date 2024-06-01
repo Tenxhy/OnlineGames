@@ -42,12 +42,13 @@ class Roulette:
                 print(f"# Il suo portafoglio contiene ora {self.checkin} euro\t", flush=True)
 
     def _numero_secco(self):
-        num = int(input("# Ha scelto l'opzione numero secco!\n#\n# Su quale numero vuole puntare?\n# Puntata:\t"))
+        num = int(input("# Ha scelto l'opzione numero secco!\n#\n# Su quale numero vuole puntare?\n# Numero:\t"))
         print("#")
         while num < 0 or num > 36:
             num = int(input("# Inserisca un numero valido\t"))
         imp = self._get_bet()
-        ris, _ = estraction.estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if num == ris:
             self._esito(True, imp*35)
@@ -58,7 +59,8 @@ class Roulette:
         print("# Ha scelto l'opzione numero pari!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris % 2 == 0:
             self._esito(True, imp*2)
@@ -69,7 +71,8 @@ class Roulette:
         print("# Ha scelto l'opzione numero dispari!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris % 2 != 0:
             self._esito(True, imp*2)
@@ -80,7 +83,8 @@ class Roulette:
         print("# Ha scelto l'opzione numero rosso!")
         print("#")
         imp = self._get_bet()
-        ris, colore = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, colore = estraction.estrai(n_estr, col_estr)
         
         if colore == "Rosso":
             self._esito(True, imp*2)
@@ -91,7 +95,8 @@ class Roulette:
         print("# Ha scelto l'opzione numero nero!")
         print("#")
         imp = self._get_bet()
-        ris, colore = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, colore = estraction.estrai(n_estr, col_estr)
         
         if colore == "Nero":
             self._esito(True, imp*2)
@@ -102,7 +107,8 @@ class Roulette:
         print("# Ha scelto l'opzione numero compreso tra 1 e 18!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris > 0 and ris < 19:
             self._esito(True, imp*2)
@@ -113,7 +119,8 @@ class Roulette:
         print("# Ha scelto l'opzione numeri tra 19 e 36!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris > 18:
             self._esito(True, imp*2)
@@ -124,7 +131,8 @@ class Roulette:
         print("# Ha scelto l'opzione prima dozzina di numeri!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris > 0 and ris < 13:
             self._esito(True, imp*3)
@@ -135,7 +143,8 @@ class Roulette:
         print("# Ha scelto l'opzione seconda dozzina di numeri!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris > 12 and ris < 25:
             self._esito(True, imp*3)
@@ -146,7 +155,8 @@ class Roulette:
         print("# Ha scelto l'opzione terza dozzina di numeri!")
         print("#")
         imp = self._get_bet()
-        ris, _ = self._estrai()
+        n_estr, col_estr = self._estrai()
+        ris, _ = estraction.estrai(n_estr, col_estr)
 
         if ris>24:
             self._esito(True, imp*3)

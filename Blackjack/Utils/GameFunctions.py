@@ -21,7 +21,9 @@ class GameFunctions:
     @staticmethod
     def getDealedCards(deck: Deck) -> List[Hand]:
         dealerHand = DealerFunctions().getDealerCards(deck)
+        
         playerHand = PlayerFunctions().getPlayerCards(deck)
+        time.sleep(1)
         return dealerHand, playerHand
     
     @staticmethod
@@ -37,7 +39,7 @@ class GameFunctions:
                 else:
                     value += 11
             else:
-                value += card.getValue().value
+                value += card.getValueInt()
             
             if value > 21:
                 for card in hand:
@@ -52,33 +54,33 @@ class GameFunctions:
 
         if type(playerHand[0]) != type([]):
             DealerFunctions().printDealerHand(dealerHand)
-            print("Your hand: ", end="")
+            print("Your hand: ", end="\n")
             for card in playerHand:
-                print(str(card), end=" | ")
+                card.display()
             print("")
         else:
             DealerFunctions().printDealerHand(dealerHand)
             for i in range(len(playerHand)):
                 hand = playerHand[i]
-                print(f"Your {i+1}° hand: ", end="")
+                print(f"Your {i+1}° hand: ", end="\n")
                 for card in hand:
-                    print(str(card), end=" | ")
+                    card.display()
                 print("")
 
     @staticmethod
     def printSplitHands(playerHand: List[Card], n_of_hand: int = None):
         if n_of_hand != None:
             hand = playerHand[n_of_hand-1]
-            print(f"Your {n_of_hand}° hand: ", end="")
+            print(f"Your {n_of_hand}° hand: ", end="\n")
             for card in hand:
-                print(str(card), end=" | ")
+                card.display()
             print("")
         else:
             for i in range(len(playerHand)):
                 hand = playerHand[i]
-                print(f"Your {i+1}° hand: ", end="")
+                print(f"Your {i+1}° hand: ", end="\n")
                 for card in hand:
-                    print(str(card), end=" | ")
+                    card.display()
                 print("")
                 time.sleep(2)
     

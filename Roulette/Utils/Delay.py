@@ -18,3 +18,4 @@ class Delay():
         print("# La pallina è finita sul numero", end="")
         self.puntoSupspance(delay)
         print(f" {num_estratto} {colore_estratto}")
+        return num_estratto, colore_estratto

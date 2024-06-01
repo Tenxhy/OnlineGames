@@ -42,10 +42,18 @@ class DealerFunctions:
     
     @staticmethod
     def printDealerHand(hand: list) -> None:
-        print("Dealer's hand: ", end="")
+        print("Dealer's hand: ", end="\n")
         for card in hand:
             if card.isHidden():
-                print("Hidden", end=" | ")
+                card_display = """
+\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
+|         |
+|         |
+|         |
+|         |
+|         |
+\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518""".strip()
+                print(card_display)
             else:
-                print(str(card), end=" | ")
-        print("")
+                card.display()
+        print("-----------------------------")

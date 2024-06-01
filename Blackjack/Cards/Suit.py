@@ -29,6 +29,3 @@ class Suit(Enum):
         
         displayCard = [str(line).replace("Y", symbol) for line in display_card]
         return displayCard
-
-print(Suit.SPADES.get_display())
-

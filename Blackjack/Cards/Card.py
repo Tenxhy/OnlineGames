@@ -15,10 +15,15 @@ class Card():
         self.__suit = suit
         self.__isHidden = isHidden
     
-    def getValue(self):
+    def getValue(self) -> Value:
         return self.__value
     
-    def getSuit(self):
+    def getValueInt(self) -> int:
+        if self.__value.value > 10:
+            return 10
+        return self.__value.value
+    
+    def getSuit(self) -> Suit:
         return self.__suit
 
     def getFormattedName(self):
@@ -31,12 +36,31 @@ class Card():
         self.__isHidden = hidden_status
     
     def get_display(self) -> list:
-        value = str(self.getValue().value)
-        if value == 10:
+        value = str(self.getValueInt())
+        if int(value) >= 10:
             if self.getValue().name.lower() in display_ranks.keys():
                 value = display_ranks[self.getValue().name.lower()]
 
-        [str(line).replace("X", value) for line in self.getSuit().get_display()]
+        if (len(value) > 1):
+            return [str(line).replace("XX", value) for line in self.getSuit().get_display()]
+        else:
+            n = 1
+            displayed_card = self.getSuit().get_display()
+            for i in range(len(displayed_card)):
+                line = displayed_card[i]
+                if "XX" not in line:
+                    continue
+
+                mValue = value
+                if not (n % 2 == 0):
+                    mValue += " "
+                else:
+                    mValue = " " + mValue
+                line = str(line).replace("XX", mValue)
+                displayed_card[i] = line
+                n += 1
+            
+            return displayed_card
 
     def display(self) -> None:
         [print(line) for line in self.get_display()]
