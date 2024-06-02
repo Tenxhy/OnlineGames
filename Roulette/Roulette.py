@@ -9,7 +9,12 @@ class Roulette:
     def __init__(self):
         self.rosso = (1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36)
         self.nero = (2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35)
-        self.checkin = int(input("# Inserisca il suo budget di check-in\n# Budget:\t"))
+        self.checkin = int(input("""
+#################################################################
+#\t\t            ROULETTE            \t\t#
+#################################################################
+#
+# Inserisca il suo budget di check-in\n# Budget:\t"""))
 
     def _get_bet(self, message: str = "# Inserisca quanto vuole puntare\n# Puntata:\t"):
         imp = int(input(message))
@@ -164,6 +169,8 @@ class Roulette:
             self._esito(False)
     
     def play(self):
+        print("#")
+
         while self.checkin > 0:
             print("""#
 # Su cosa vuole puntare?\n#

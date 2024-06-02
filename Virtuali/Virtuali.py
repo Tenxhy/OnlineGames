@@ -1,4 +1,3 @@
-
 import random as rand
 from colorama import Fore, Back, Style
 import yaml
@@ -39,7 +38,7 @@ class Virtuali():
 
         print("""
 #################################################################
-#\t\t      VIRTUALI MATINO MENICHETTI      \t\t#
+#\t\t            VIRTUALI               \t\t#
 #################################################################""".strip())
         print("#")
 
@@ -94,8 +93,6 @@ class Virtuali():
         risultatiGiocati = []
         quota = 1
         partiteNonValide = []
-
-        os.system('cls' if os.name == 'nt' else 'clear')
 
         for c in range(npartite):
 
