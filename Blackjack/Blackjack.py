@@ -45,15 +45,15 @@ class Blackjack():
             else:
                 toBreak = False
                 while not GameFunctions().isBust(playerHand):
-                    print("")
+                    print("#")
 
                     if GameFunctions().getHandValue(playerHand) == 21:
                         break
 
                     if len(playerHand.getCards()) == 2:
-                        choice = input("What do you want to do? 'hit' | 'stand' | 'double' | 'split' ")
+                        choice = input("# What do you want to do? 'hit' | 'stand' | 'double' | 'split' ")
                     else:
-                        choice = input("What do you want to do? 'hit' | 'stand' | 'split' ")
+                        choice = input("# What do you want to do? 'hit' | 'stand' | 'split' ")
                     
                     match choice:
 
@@ -205,7 +205,7 @@ class Blackjack():
             print(f"# Your balance: {balance}")
 
             if balance > 0:
-                print("")
+                print("#")
                 playAgain = input("# Do you want to play again? ")
                 if playAgain.lower() == "no":
                     break

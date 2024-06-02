@@ -2,6 +2,7 @@ from Cards import Deck
 from Cards import Card
 from Cards import Hand
 from typing import List
+import time
 
 @staticmethod
 class DealerFunctions:
@@ -42,18 +43,17 @@ class DealerFunctions:
     
     @staticmethod
     def printDealerHand(hand: list) -> None:
-        print("Dealer's hand: ", end="\n")
+        print("# Dealer's hand: ", end="\n")
         for card in hand:
             if card.isHidden():
                 card_display = """
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-|         |
-|         |
-|         |
-|         |
-|         |
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518""".strip()
+\u250C\u2500\u2500\u2500\u2500\u2500\u2510
+|     |
+|     |
+|     |
+\u2514\u2500\u2500\u2500\u2500\u2500\u2518""".strip()
                 print(card_display)
             else:
                 card.display()
-        print("-----------------------------")
+        print("#-----------------------------")
+        time.sleep(2)
