@@ -1,6 +1,6 @@
 # Online Games
 
-Benvenuto nel progetto Online Games! Questa repository contiene tre giochi: Roulette, Virtuali e BlackJack. Ogni gioco ha una breve descrizione e istruzioni su come avviarli.
+Benvenuto nel progetto Online Games. Questa repository contiene tre giochi: Roulette, Virtuali e BlackJack. Ogni gioco ha una breve descrizione e istruzioni su come avviarli.
 
 ## Descrizione
 
@@ -16,7 +16,7 @@ Le "Virtuali" sono delle simulazioni di partite di calcio. I giocatori possono s
 
 Il BlackJack è un gioco di carte in cui l'obiettivo è ottenere una mano il più vicino possibile al valore di 21 senza superarlo. I giocatori competono contro il banco e devono prendere decisioni strategiche per migliorare le loro possibilità di vincere.
 
-## Istruzioni
+## Istruzioni per l'uso
 
 Per clonare la repository e avviare i giochi, segui i passaggi seguenti:
 
@@ -28,7 +28,7 @@ Per clonare la repository e avviare i giochi, segui i passaggi seguenti:
     git clone https://github.com/Tenxhy/OnlineGames
     ```
 
-4. Posizionati nella cartella del gioco che desideri avviare con `cd` (ad esempio, `cd .\Roulette`).
+4. Posizionati nella cartella del gioco che desideri avviare usando il comando `cd` da terminale (ad esempio, `cd .\Roulette`).
 5. Esegui il file `Main.py` per avviare il gioco:
 
     ```bash
@@ -37,7 +37,7 @@ Per clonare la repository e avviare i giochi, segui i passaggi seguenti:
 
 ## Requisiti
 
-Per utilizzare correttamente i giochi, assicurati di avere installati i seguenti requisiti:
+Per clonare la repository e utilizzare correttamente i giochi, assicurati di avere installati i seguenti requisiti:
 
-- Python 3.7 o versione successiva
-- Git
+- [Git](https://git-scm.com/downloads)
+- [Python](https://www.python.org/downloads/) 3.7 o versione successiva
