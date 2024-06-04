@@ -126,8 +126,16 @@ class GameFunctions:
     
     @staticmethod
     def balanceRefresh(balance: float, bet: float, result: str) -> float:
-        if result.startswith("# Player wins"):
-            balance += bet
-        elif result.startswith("# Dealer wins"):
-            balance -= bet
+        if type(result) is list():
+            for i in range(result):
+                r = result[i]
+                if r.startswith(f"# Player wins the {i+1}° hand"):
+                    balance += bet
+                elif r.startswith(f"# Dealer wins the {i+1}° hand"):
+                    balance -= bet
+        else:
+            if result.startswith("# Player wins"):
+                balance += bet
+            elif result.startswith("# Dealer wins"):
+                balance -= bet
         return balance
