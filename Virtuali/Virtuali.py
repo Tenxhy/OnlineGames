@@ -182,7 +182,7 @@ class Virtuali():
             budget = budget + float(vincitaPotenziale)
 
         else:
-            print("# Lei è appena perso! La perdita è di "+ Fore.RED, str(importo) + " euro", Style.RESET_ALL)
+            print("# Lei ha appena perso! La perdita è di "+ Fore.RED, str(importo) + " euro", Style.RESET_ALL)
 
         scelta = int(input(f"# Il suo budget attuale è di {budget} euro. Per continuare a giocare prema 1, per smettere prema qualsiasi altro tasto: "))
             
