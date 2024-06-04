@@ -33,10 +33,9 @@ class GameFunctions:
 
         for card in hand:
             if card.getValue() == Value.ACE:
-                if value + 11 > 21:
-                    value += 1
-                else:
-                    value += 11
+                value += 11
+            elif card.getValue() in [Value.JACK, Value.QUEEN, Value.KING]:
+                value += 10
             else:
                 value += card.getValueInt()
             
@@ -51,15 +50,14 @@ class GameFunctions:
     @staticmethod
     def printHands(dealerHand: List[Card], playerHand: List[Card]):
 
+        DealerFunctions().printDealerHand(dealerHand)
         if type(playerHand[0]) != type([]):
-            DealerFunctions().printDealerHand(dealerHand)
             print("# Your hand: ", end="\n")
             for card in playerHand:
                 card.display()
             print("#")
             time.sleep(2)
         else:
-            DealerFunctions().printDealerHand(dealerHand)
             for i in range(len(playerHand)):
                 hand = playerHand[i]
                 print(f"# Your {i+1}° hand: ", end="\n")

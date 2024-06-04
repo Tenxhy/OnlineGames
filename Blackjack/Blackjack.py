@@ -59,7 +59,7 @@ class Blackjack():
 
                         case "hit":
                             playerHand = PlayerFunctions().hit(deck, playerHand)
-                            GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                            PlayerFunctions().printPlayerHands(playerHand.getCards())
 
                         case "double":
                             if balance < (bet*2) + bet:
@@ -67,7 +67,7 @@ class Blackjack():
                             else:
                                 bet *= 2
                                 playerHand = PlayerFunctions().doubleDown(deck, playerHand)
-                                GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                                PlayerFunctions().printPlayerHands(playerHand.getCards())
                                 break
                         
                         case "split":
@@ -75,7 +75,7 @@ class Blackjack():
                                 print("# You can only split if you have two cards of the same value and if you have enough money.")
                             else:
                                 playerHand = PlayerFunctions().split(deck, playerHand)
-                                GameFunctions().printHands(dealerHand.getCards(), playerHand.getCards())
+                                PlayerFunctions().printPlayerHands(playerHand.getCards())
 
                                 while not GameFunctions().isBust(Hand(playerHand.getCards()[0])):
                                     print("#")

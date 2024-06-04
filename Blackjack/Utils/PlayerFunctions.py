@@ -2,6 +2,7 @@ from Cards import Deck
 from Cards import Card
 from Cards import Hand
 from typing import List
+import time
 
 @staticmethod
 class PlayerFunctions:
@@ -55,4 +56,21 @@ class PlayerFunctions:
                 newHandCards.append([hand.getCards()[i], deck.drawCard()])
             hand.split(newHandCards[0], newHandCards[1])
             return hand
+        
+    def printPlayerHands(dealerHand: List[Card], playerHand: List[Card]):
+
+        if type(playerHand[0]) != type([]):
+            print("# Your hand: ", end="\n")
+            for card in playerHand:
+                card.display()
+            print("#")
+            time.sleep(2)
+        else:
+            for i in range(len(playerHand)):
+                hand = playerHand[i]
+                print(f"# Your {i+1}° hand: ", end="\n")
+                for card in hand:
+                    card.display()
+                print("#")
+                time.sleep(1)
     
