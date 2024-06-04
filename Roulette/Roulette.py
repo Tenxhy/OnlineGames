@@ -213,4 +213,4 @@ class Roulette:
                 case 10:
                     self._terza_12()
             
-            time.sleep(2)
+            time.sleep(3)

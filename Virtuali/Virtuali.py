@@ -187,4 +187,4 @@ class Virtuali():
         scelta = int(input(f"# Il suo budget attuale è di {budget} euro. Per continuare a giocare prema 1, per smettere prema qualsiasi altro tasto: "))
             
         if scelta == 1:
-            self.start()
+            self.play()
